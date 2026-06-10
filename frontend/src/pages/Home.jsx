@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import axios from "axios";
 import empresaImg from "../assets/empresa.png";
-import logo from "../assets/logo.png";
+import Navbar from "../components/Navbar";
 
 function Home({ temaEscuro, setTemaEscuro }) {
   const [totalClientes, setTotalClientes] = useState(0);
@@ -46,37 +45,7 @@ function Home({ temaEscuro, setTemaEscuro }) {
 
   return (
     <div className="home">
-      <nav className="navbar">
-        <div className="logo">
-          <img src={logo} alt="Pixel Geek" className="logo-img" />
-          <span>Pixel Geek</span>
-        </div>
-
-        <div className="menu">
-          <Link to="/clientes">
-            <button>Entrar na Lista de Espera</button>
-          </Link>
-
-          <Link to="/trabalhe-conosco">
-            <button>Seja da Equipe</button>
-          </Link>
-
-          <Link to="/sobre">
-            <button>Sobre</button>
-          </Link>
-
-          <Link to="/contato">
-            <button>Contato</button>
-          </Link>
-
-          <button
-            className="botao-tema"
-            onClick={() => setTemaEscuro(!temaEscuro)}
-          >
-            {temaEscuro ? "☀️" : "🌙"}
-          </button>
-        </div>
-      </nav>
+      <Navbar temaEscuro={temaEscuro} setTemaEscuro={setTemaEscuro} />
 
       <section className="hero">
         <div className="hero-text">

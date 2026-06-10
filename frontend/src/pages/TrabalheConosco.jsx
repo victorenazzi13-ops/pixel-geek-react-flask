@@ -188,9 +188,7 @@ function TrabalheConosco() {
         </select>
 
         <button type="submit">
-          {candidatoEditando
-            ? "Salvar Alterações"
-            : "Quero Ser um Pixel Geek"}
+          {candidatoEditando ? "Salvar Alterações" : "Quero Ser um Pixel Geek"}
         </button>
 
         {candidatoEditando && (
@@ -229,6 +227,8 @@ function TrabalheConosco() {
                 <h3>🚀 {candidato.nome}</h3>
                 <p>{candidato.email}</p>
                 <p>{candidato.telefone}</p>
+
+                <p className="data-cadastro">📅 {candidato.data_cadastro}</p>
                 <span className="badge-area">{candidato.area}</span>
 
                 <div className="acoes-card">

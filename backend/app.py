@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import sqlite3
+from datetime import datetime
 
 app = Flask(__name__)
 CORS(app)
@@ -18,7 +19,9 @@ def criar_tabelas():
         CREATE TABLE IF NOT EXISTS clientes (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             nome TEXT NOT NULL,
-            email TEXT UNIQUE NOT NULL
+            email TEXT UNIQUE NOT NULL,
+            cpf TEXT NOT NULL,
+            data_cadastro TEXT NOT NULL
         )
     """)
 
@@ -28,7 +31,8 @@ def criar_tabelas():
             nome TEXT NOT NULL,
             email TEXT NOT NULL,
             telefone TEXT NOT NULL,
-            area TEXT NOT NULL
+            area TEXT NOT NULL,
+            data_cadastro TEXT NOT NULL
         )
     """)
 
@@ -52,20 +56,23 @@ def cadastrar_cliente():
 
     nome = dados.get("nome")
     email = dados.get("email")
+    cpf = dados.get("cpf")
 
-    if not nome or not email:
+    if not nome or not email or not cpf:
         return jsonify({
-            "erro": "Nome e email são obrigatórios."
+            "erro": "Nome, email e CPF são obrigatórios."
         }), 400
 
     try:
         conexao = conectar_banco()
         cursor = conexao.cursor()
 
+        data_cadastro = datetime.now().strftime("%d/%m/%Y %H:%M")
+
         cursor.execute("""
-            INSERT INTO clientes (nome, email)
-            VALUES (?, ?)
-        """, (nome, email))
+            INSERT INTO clientes (nome, email, cpf, data_cadastro)
+            VALUES (?, ?, ?, ?)
+        """, (nome, email, cpf, data_cadastro))
 
         conexao.commit()
         conexao.close()
@@ -85,7 +92,7 @@ def listar_clientes():
     conexao = conectar_banco()
     cursor = conexao.cursor()
 
-    cursor.execute("SELECT id, nome, email FROM clientes")
+    cursor.execute("SELECT id, nome, email, cpf, data_cadastro FROM clientes")
     clientes = cursor.fetchall()
 
     conexao.close()
@@ -96,7 +103,9 @@ def listar_clientes():
         lista_clientes.append({
             "id": cliente[0],
             "nome": cliente[1],
-            "email": cliente[2]
+            "email": cliente[2],
+            "cpf": cliente[3],
+            "data_cadastro": cliente[4]
         })
 
     return jsonify(lista_clientes)
@@ -108,10 +117,11 @@ def editar_cliente(id):
 
     nome = dados.get("nome")
     email = dados.get("email")
+    cpf = dados.get("cpf")
 
-    if not nome or not email:
+    if not nome or not email or not cpf:
         return jsonify({
-            "erro": "Nome e email são obrigatórios."
+            "erro": "Nome, email e CPF são obrigatórios."
         }), 400
 
     try:
@@ -120,9 +130,9 @@ def editar_cliente(id):
 
         cursor.execute("""
             UPDATE clientes
-            SET nome = ?, email = ?
+            SET nome = ?, email = ?, cpf = ?
             WHERE id = ?
-        """, (nome, email, id))
+        """, (nome, email, cpf, id))
 
         conexao.commit()
 
@@ -183,10 +193,12 @@ def cadastrar_candidato():
     conexao = conectar_banco()
     cursor = conexao.cursor()
 
+    data_cadastro = datetime.now().strftime("%d/%m/%Y %H:%M")
+
     cursor.execute("""
-        INSERT INTO candidatos (nome, email, telefone, area)
-        VALUES (?, ?, ?, ?)
-    """, (nome, email, telefone, area))
+        INSERT INTO candidatos (nome, email, telefone, area, data_cadastro)
+        VALUES (?, ?, ?, ?, ?)
+    """, (nome, email, telefone, area, data_cadastro))
 
     conexao.commit()
     conexao.close()
@@ -201,7 +213,7 @@ def listar_candidatos():
     conexao = conectar_banco()
     cursor = conexao.cursor()
 
-    cursor.execute("SELECT id, nome, email, telefone, area FROM candidatos")
+    cursor.execute("SELECT id, nome, email, telefone, area, data_cadastro FROM candidatos")
     candidatos = cursor.fetchall()
 
     conexao.close()
@@ -214,7 +226,8 @@ def listar_candidatos():
             "nome": candidato[1],
             "email": candidato[2],
             "telefone": candidato[3],
-            "area": candidato[4]
+            "area": candidato[4],
+            "data_cadastro": candidato[5]
         })
 
     return jsonify(lista_candidatos)

@@ -6,6 +6,7 @@ function Clientes() {
   const [nome, setNome] = useState("");
   const [clientes, setClientes] = useState([]);
   const [email, setEmail] = useState("");
+  const [cpf, setCpf] = useState("");
   const [busca, setBusca] = useState("");
   const [clienteEditando, setClienteEditando] = useState(null);
   const [carregando, setCarregando] = useState(false);
@@ -28,8 +29,8 @@ function Clientes() {
   async function salvarCliente(e) {
     e.preventDefault();
 
-    if (!nome.trim() || !email.trim()) {
-      alert("Preencha nome e e-mail para continuar.");
+    if (!nome.trim() || !email.trim() || !cpf.trim()) {
+      alert("Preencha nome, cpf e e-mail para continuar.");
       return;
     }
 
@@ -40,6 +41,7 @@ function Clientes() {
           {
             nome,
             email,
+            cpf,
           },
         );
 
@@ -48,6 +50,7 @@ function Clientes() {
         await axios.post("http://127.0.0.1:5000/clientes", {
           nome,
           email,
+          cpf,
         });
 
         alert(
@@ -68,6 +71,7 @@ function Clientes() {
     setClienteEditando(cliente);
     setNome(cliente.nome);
     setEmail(cliente.email);
+    setCpf(cliente.cpf);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
@@ -95,6 +99,7 @@ function Clientes() {
   function limparFormulario() {
     setNome("");
     setEmail("");
+    setCpf("");
     setClienteEditando(null);
   }
 
@@ -107,7 +112,8 @@ function Clientes() {
 
     return (
       cliente.nome.toLowerCase().includes(textoBusca) ||
-      cliente.email.toLowerCase().includes(textoBusca)
+      cliente.email.toLowerCase().includes(textoBusca) ||
+      cliente.cpf.includes(textoBusca)
     );
   });
 
@@ -133,6 +139,23 @@ function Clientes() {
           placeholder="Seu melhor e-mail"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+
+        <input
+          type="text"
+          placeholder="CPF"
+          value={cpf}
+          maxLength={14}
+          onChange={(e) => {
+            let valor = e.target.value.replace(/\D/g, "");
+
+            valor = valor.replace(/(\d{3})(\d)/, "$1.$2");
+            valor = valor.replace(/(\d{3})(\d)/, "$1.$2");
+            valor = valor.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+
+            setCpf(valor);
+          }}
           required
         />
 
@@ -177,6 +200,9 @@ function Clientes() {
               <div className="card" key={cliente.id}>
                 <h3>👾 {cliente.nome}</h3>
                 <p>{cliente.email}</p>
+                <p>{cliente.cpf}</p>
+
+                <p className="data-cadastro">📅 {cliente.data_cadastro}</p>
 
                 <div className="acoes-card">
                   <button type="button" onClick={() => editarCliente(cliente)}>
