@@ -91,7 +91,7 @@ function Home({ temaEscuro, setTemaEscuro }) {
         </div>
       </section>
       <footer className="footer">
-        <p>© 2026 Pixel Geek</p>
+        <a href="/area-secreta">© 2026 Pixel Geek</a>
       </footer>
     </div>
   );

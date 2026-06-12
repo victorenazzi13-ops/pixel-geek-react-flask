@@ -6,6 +6,7 @@ import Clientes from "./pages/Clientes";
 import TrabalheConosco from "./pages/TrabalheConosco";
 import Sobre from "./pages/Sobre";
 import Contato from "./pages/Contato";
+import AreaSecreta from "./pages/AreaSecreta";
 
 import "./App.css";
 
@@ -36,6 +37,8 @@ function App() {
           <Route path="/sobre" element={<Sobre />} />
 
           <Route path="/contato" element={<Contato />} />
+
+          <Route path="/area-secreta" element={<AreaSecreta />} />
         </Routes>
       </BrowserRouter>
     </div>
