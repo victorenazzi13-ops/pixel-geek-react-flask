@@ -92,7 +92,7 @@ def listar_clientes():
     conexao = conectar_banco()
     cursor = conexao.cursor()
 
-    cursor.execute("SELECT id, nome, email, cpf, data_cadastro FROM clientes")
+    cursor.execute("SELECT id, nome, email, cpf, data_cadastro FROM clientes ORDER BY nome")
     clientes = cursor.fetchall()
 
     conexao.close()
@@ -213,7 +213,7 @@ def listar_candidatos():
     conexao = conectar_banco()
     cursor = conexao.cursor()
 
-    cursor.execute("SELECT id, nome, email, telefone, area, data_cadastro FROM candidatos")
+    cursor.execute("SELECT id, nome, email, telefone, area, data_cadastro FROM candidatos ORDER BY nome")
     candidatos = cursor.fetchall()
 
     conexao.close()

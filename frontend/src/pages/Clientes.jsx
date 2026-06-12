@@ -11,6 +11,20 @@ function Clientes() {
   const [clienteEditando, setClienteEditando] = useState(null);
   const [carregando, setCarregando] = useState(false);
 
+  function ocultarEmail(emailCompleto) {
+    if (!emailCompleto || !emailCompleto.includes("@")) {
+      return emailCompleto;
+    }
+
+    const [usuario, dominio] = emailCompleto.split("@");
+
+    if (usuario.length <= 2) {
+      return `${usuario[0]}***@${dominio}`;
+    }
+
+    return `${usuario.slice(0, 3)}***@${dominio}`;
+  }
+
   async function buscarClientes() {
     try {
       setCarregando(true);
@@ -26,11 +40,25 @@ function Clientes() {
     }
   }
 
+  function ocultarCpf(cpfCompleto) {
+  if (!cpfCompleto) {
+    return "";
+  }
+
+  const somenteNumeros = cpfCompleto.replace(/\D/g, "");
+
+  if (somenteNumeros.length !== 11) {
+    return cpfCompleto;
+  }
+
+  return `${somenteNumeros.slice(0, 3)}.***.***-${somenteNumeros.slice(9, 11)}`;
+}
+
   async function salvarCliente(e) {
     e.preventDefault();
 
     if (!nome.trim() || !email.trim() || !cpf.trim()) {
-      alert("Preencha nome, cpf e e-mail para continuar.");
+      alert("Preencha nome, CPF e e-mail para continuar.");
       return;
     }
 
@@ -45,7 +73,7 @@ function Clientes() {
           },
         );
 
-        alert("Cadastro atualizado com sucesso!");
+        alert(`Cadastro de ${nome} atualizado com sucesso!`);
       } else {
         await axios.post("http://127.0.0.1:5000/clientes", {
           nome,
@@ -53,9 +81,7 @@ function Clientes() {
           cpf,
         });
 
-        alert(
-          "Cadastro realizado com sucesso! Bem-vindo à comunidade Pixel Geek.",
-        );
+        alert(`Bem-vindo à lista de espera da Pixel Geek, ${nome}!`);
       }
 
       limparFormulario();
@@ -181,11 +207,14 @@ function Clientes() {
           <div>
             <h2>Lista de Espera</h2>
             <p>{clientes.length} pessoa(s) aguardando o lançamento</p>
+            <p className="resultado-busca">
+              {clientesFiltrados.length} resultado(s) encontrado(s)
+            </p>
           </div>
 
           <input
             type="text"
-            placeholder="Buscar por nome ou e-mail..."
+            placeholder="Buscar por nome, e-mail ou CPF..."
             value={busca}
             onChange={(e) => setBusca(e.target.value)}
             className="input-busca"
@@ -199,8 +228,8 @@ function Clientes() {
             clientesFiltrados.map((cliente) => (
               <div className="card" key={cliente.id}>
                 <h3>👾 {cliente.nome}</h3>
-                <p>{cliente.email}</p>
-                <p>{cliente.cpf}</p>
+                <p>{ocultarEmail(cliente.email)}</p>
+                <p>CPF: {ocultarCpf(cliente.cpf)}</p>
 
                 <p className="data-cadastro">📅 {cliente.data_cadastro}</p>
 
@@ -220,7 +249,9 @@ function Clientes() {
               </div>
             ))
           ) : (
-            <p className="mensagem-vazia">Nenhum usuário encontrado.</p>
+            <p className="mensagem-vazia">
+              👾 Nenhuma pessoa encontrada na lista de espera.
+            </p>
           )}
         </div>
       </div>

@@ -72,7 +72,7 @@ function Home({ temaEscuro, setTemaEscuro }) {
 
             <div className="dashboard-card">
               <span>🎮</span>
-              <strong>{areaMaisProcurada}</strong>
+              <strong className="area-dashboard">{areaMaisProcurada}</strong>
               <p>área mais procurada</p>
             </div>
           </div>
@@ -90,6 +90,9 @@ function Home({ temaEscuro, setTemaEscuro }) {
           </p>
         </div>
       </section>
+      <footer className="footer">
+        <p>© 2026 Pixel Geek</p>
+      </footer>
     </div>
   );
 }

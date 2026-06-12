@@ -12,6 +12,59 @@ function TrabalheConosco() {
   const [carregando, setCarregando] = useState(false);
   const [candidatoEditando, setCandidatoEditando] = useState(null);
 
+  function emojiPerfil(id) {
+    const emojis = [
+      "😎",
+      "🤖",
+      "👾",
+      "🎮",
+      "🦾",
+      "🧙",
+      "🦸",
+      "🐱",
+      "🐼",
+      "🦊",
+      "🐧",
+      "🐙",
+      "🚀",
+      "⭐",
+      "🔥",
+    ];
+
+    return emojis[id % emojis.length];
+  }
+
+  function ocultarTelefone(telefoneCompleto) {
+    if (!telefoneCompleto) {
+      return "";
+    }
+
+    const numeros = telefoneCompleto.replace(/\D/g, "");
+
+    if (numeros.length < 10) {
+      return telefoneCompleto;
+    }
+
+    const ddd = numeros.slice(0, 2);
+    const inicio = numeros.slice(2, -4);
+
+    return `(${ddd}) ${inicio}-****`;
+  }
+
+  function ocultarEmail(emailCompleto) {
+    if (!emailCompleto || !emailCompleto.includes("@")) {
+      return emailCompleto;
+    }
+
+    const [usuario, dominio] = emailCompleto.split("@");
+
+    if (usuario.length <= 2) {
+      return `${usuario[0]}***@${dominio}`;
+    }
+
+    return `${usuario.slice(0, 3)}***@${dominio}`;
+  }
+
   async function buscarCandidatos() {
     try {
       setCarregando(true);
@@ -42,6 +95,26 @@ function TrabalheConosco() {
     return `(${numero.slice(0, 2)}) ${numero.slice(2, 7)}-${numero.slice(7)}`;
   }
 
+  function emojiArea(area, id) {
+    const emojis = {
+      Animes: ["⚡", "🔥", "✨", "🌸", "🍜"],
+      "Atend. ao Cliente": ["🎧", "🤝", "💬", "📞", "😊"],
+      "Desen. Web": ["💻", "⌨️", "🖥️", "⚙️", "🚀"],
+      "Design Gráfico": ["🎨", "🖌️", "✨", "📸", "🌈"],
+      Games: ["🎮", "👾", "🕹️", "🏆", "🔥"],
+      "Gest. de Produtos": ["📦", "📊", "📈", "🎯", "🚀"],
+      Logística: ["🚚", "📦", "🛣️", "⚡", "🏍️"],
+      "Marketing Digital": ["📢", "📈", "🎯", "💡", "🚀"],
+      "Redes Sociais": ["📱", "📸", "🎥", "❤️", "🔥"],
+      Tecnologia: ["🤖", "🧠", "⚙️", "💻", "🚀"],
+    };
+
+    const lista = emojis[area] || ["🚀"];
+    const indice = id % lista.length;
+
+    return lista[indice];
+  }
+
   async function salvarCandidato(e) {
     e.preventDefault();
 
@@ -62,7 +135,7 @@ function TrabalheConosco() {
           },
         );
 
-        alert("Candidato atualizado com sucesso!");
+        alert(`Candidato ${nome} atualizado com sucesso!`);
       } else {
         await axios.post("http://127.0.0.1:5000/candidatos", {
           nome,
@@ -71,7 +144,9 @@ function TrabalheConosco() {
           area,
         });
 
-        alert("Cadastro enviado com sucesso! Em breve entraremos em contato.");
+        alert(
+          `Obrigado pelo interesse, ${nome}! Em breve entraremos em contato.`,
+        );
       }
 
       limparFormulario();
@@ -131,6 +206,7 @@ function TrabalheConosco() {
     return (
       candidato.nome.toLowerCase().includes(textoBusca) ||
       candidato.email.toLowerCase().includes(textoBusca) ||
+      candidato.telefone.includes(textoBusca) ||
       candidato.area.toLowerCase().includes(textoBusca)
     );
   });
@@ -176,11 +252,11 @@ function TrabalheConosco() {
         >
           <option value="">Selecione sua área de interesse</option>
           <option value="Animes">Animes</option>
-          <option value="Atendimento ao Cliente">Atendimento ao Cliente</option>
-          <option value="Desenvolvimento Web">Desenvolvimento Web</option>
+          <option value="Atend. ao Cliente">Atend. ao Cliente</option>
+          <option value="Desen. Web">Desen. Web</option>
           <option value="Design Gráfico">Design Gráfico</option>
           <option value="Games">Games</option>
-          <option value="Gestão de Produtos">Gestão de Produtos</option>
+          <option value="Gest. de Produtos">Gest. de Produtos</option>
           <option value="Logística">Logística</option>
           <option value="Marketing Digital">Marketing Digital</option>
           <option value="Redes Sociais">Redes Sociais</option>
@@ -207,11 +283,14 @@ function TrabalheConosco() {
           <div>
             <h2>Candidatos Pixel Geek</h2>
             <p>{candidatos.length} candidato(s) cadastrado(s)</p>
+            <p className="resultado-busca">
+              {candidatosFiltrados.length} resultado(s) encontrado(s)
+            </p>
           </div>
 
           <input
             type="text"
-            placeholder="Buscar por nome, e-mail ou área..."
+            placeholder="Buscar por nome, e-mail, telefone ou área..."
             value={busca}
             onChange={(e) => setBusca(e.target.value)}
             className="input-busca"
@@ -224,12 +303,18 @@ function TrabalheConosco() {
           ) : candidatosFiltrados.length > 0 ? (
             candidatosFiltrados.map((candidato) => (
               <div className="card" key={candidato.id}>
-                <h3>🚀 {candidato.nome}</h3>
-                <p>{candidato.email}</p>
-                <p>{candidato.telefone}</p>
+                <h3>
+                  {emojiPerfil(candidato.id)} {candidato.nome}
+                </h3>
+
+                <p>{ocultarEmail(candidato.email)}</p>
+                <p>{ocultarTelefone(candidato.telefone)}</p>
 
                 <p className="data-cadastro">📅 {candidato.data_cadastro}</p>
-                <span className="badge-area">{candidato.area}</span>
+
+                <span className="badge-area">
+                  {emojiArea(candidato.area, candidato.id + 2)} {candidato.area}
+                </span>
 
                 <div className="acoes-card">
                   <button
@@ -250,7 +335,9 @@ function TrabalheConosco() {
               </div>
             ))
           ) : (
-            <p className="mensagem-vazia">Nenhum candidato encontrado.</p>
+            <p className="mensagem-vazia">
+              🚀 Nenhum candidato encontrado para a equipe Pixel Geek.
+            </p>
           )}
         </div>
       </div>

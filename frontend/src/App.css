@@ -250,8 +250,9 @@ body {
 .dashboard-card strong {
   display: block;
   color: #facc15;
-  font-size: 22px;
+  font-size: 1.6rem;
   margin-bottom: 2px;
+  line-height: 1.1;
 }
 
 .dashboard-card p {
@@ -495,3 +496,26 @@ form {
   color: white !important;
   border-color: #facc15 !important;
 }
+
+.resultado-busca {
+  margin-top: 6px;
+  font-size: 13px;
+  color: #94a3b8;
+}
+
+.tema-claro .resultado-busca {
+  color: #64748b !important;
+}
+
+.footer {
+  text-align: center;
+  margin-top: 50px;
+  padding: 20px;
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+.tema-claro .footer {
+  color: #64748b;
+}
+
