@@ -1,68 +1,199 @@
 # 🎮 Pixel Geek
 
-A Pixel Geek é uma loja virtual fictícia desenvolvida para conectar fãs da cultura geek a produtos inspirados em games, animes, filmes, séries e tecnologia.
+A **Pixel Geek** é uma aplicação web desenvolvida como projeto para o Jovem Tech com o objetivo de modernizar um sistema previamente fornecido pela disciplina, aplicando conceitos de desenvolvimento Full Stack através da integração entre Front-End, Back-End e Banco de Dados.
 
-O sistema permite que usuários entrem em uma lista de espera para o lançamento da loja e também se candidatem para futuras vagas na equipe.
-
----
-
-## 🚀 Tecnologias Utilizadas
-
-### Frontend
-- React
-- React Router DOM
-- Axios
-- CSS3
-
-### Backend
-- Python
-- Flask
-- Flask-CORS
-
-### Banco de Dados
-- SQLite
+O sistema simula o lançamento de uma loja geek fictícia voltada para fãs de games, animes, filmes, séries e tecnologia, permitindo que usuários entrem em uma lista de espera para o lançamento da loja e também se candidatem para futuras oportunidades de trabalho.
 
 ---
 
-## ✨ Funcionalidades
+# 🚀 Tecnologias Utilizadas
 
-### Lista de Espera
-- Cadastro de usuários
-- Validação de campos
-- Máscara de CPF
-- Busca por nome e e-mail
-- Edição de cadastro
-- Exclusão de cadastro
-- Confirmação antes de excluir
+## Front-End
 
-### Trabalhe Conosco
-- Cadastro de candidatos
-- Máscara de telefone
-- Seleção de área de interesse
-- Busca por nome, e-mail e área
-- Edição de candidato
-- Exclusão de candidato
-- Confirmação antes de excluir
+* React
+* React Router DOM
+* Axios
+* CSS3
 
-### Dashboard
-- Total de pessoas na lista de espera
-- Total de candidatos cadastrados
-- Área mais procurada pelos candidatos
+## Back-End
 
-### Interface
-- Tema Claro e Escuro
-- Layout responsivo
-- Componentização React
-- Identidade visual personalizada Pixel Geek
-- Animações e efeitos visuais
+* Python
+* Flask
+* Flask-CORS
 
-### Banco de Dados
-- Persistência de dados com SQLite
-- Registro automático de data e hora de cadastro
+## Banco de Dados
+
+* SQLite
+
+## Ferramentas
+
+* Visual Studio Code
+* Git
+* GitHub
+* DB Browser for SQLite
+* Figma
 
 ---
 
-## 📂 Estrutura do Projeto
+# 🎯 Objetivo do Projeto
+
+O principal objetivo do projeto foi transformar uma aplicação básica em uma solução Full Stack completa, conectando interface, regras de negócio e persistência de dados através da integração entre React, Flask e SQLite.
+
+Além disso, foram implementadas melhorias visuais e funcionais para tornar o sistema mais moderno, intuitivo e alinhado ao público-alvo da Pixel Geek.
+
+---
+
+# 👾 Público-Alvo
+
+A Pixel Geek foi desenvolvida para:
+
+* Fãs de games
+* Fãs de animes
+* Consumidores de produtos geek
+* Entusiastas de tecnologia
+* Interessados em futuras vagas da empresa
+
+---
+
+# ✨ Funcionalidades
+
+## 🎟️ Lista de Espera
+
+* Cadastro de usuários
+* Validação de campos obrigatórios
+* Máscara de CPF durante o cadastro
+* Busca em tempo real
+* Busca por nome, e-mail e CPF
+* Edição de cadastro
+* Exclusão de cadastro
+* Confirmação antes da exclusão
+* Cancelamento de edição
+* Exibição da data de cadastro
+* Ocultação parcial de CPF
+* Ocultação parcial de e-mail
+
+---
+
+## 💼 Trabalhe Conosco
+
+* Cadastro de candidatos
+* Máscara de telefone
+* Seleção de área de interesse
+* Busca em tempo real
+* Busca por nome, e-mail e área
+* Contador de resultados encontrados
+* Edição de candidatos
+* Exclusão de candidatos
+* Confirmação antes da exclusão
+* Cancelamento de edição
+* Exibição da data de cadastro
+* Ocultação parcial de telefone
+* Ocultação parcial de e-mail
+* Badge visual para áreas de interesse
+* Emojis dinâmicos nos perfis
+
+---
+
+## 📊 Dashboard Inteligente
+
+* Total de clientes cadastrados
+* Total de candidatos cadastrados
+* Área mais procurada
+* Atualização automática das estatísticas
+
+---
+
+## 🎨 Interface e Experiência do Usuário
+
+* Tema Claro e Escuro
+* Layout responsivo
+* Componentização React
+* Navbar reutilizável
+* Identidade visual própria
+* Logotipo personalizado
+* Mensagens de erro mais claras
+* Feedback personalizado ao usuário
+* Scroll automático ao editar registros
+* Rodapé institucional
+* Animações e efeitos visuais
+
+---
+
+## 🎁 Funcionalidades Extras
+
+### Dashboard de Estatísticas
+
+O sistema apresenta um painel inicial contendo:
+
+* Quantidade total de clientes
+* Quantidade total de candidatos
+* Área mais procurada pelos candidatos
+
+---
+
+### Registro Automático de Data e Hora
+
+Todos os registros recebem automaticamente:
+
+* Data de cadastro
+* Hora de cadastro
+
+Sem necessidade de preenchimento manual.
+
+---
+
+### Ocultação de Dados Sensíveis
+
+Para aumentar a privacidade dos usuários:
+
+* CPF é parcialmente ocultado
+* Telefone é parcialmente ocultado
+* E-mail é parcialmente ocultado
+
+---
+
+### Área Secreta Pixel Geek
+
+Foi implementado um Easter Egg acessível através do rodapé da aplicação.
+
+Ao encontrar a área secreta, o usuário recebe:
+
+* Benefícios exclusivos
+* Cupom promocional fictício
+* Conteúdo especial da comunidade Pixel Geek
+
+---
+
+# 🗄️ Banco de Dados
+
+O sistema utiliza SQLite para persistência dos dados.
+
+## Tabela Clientes
+
+| Campo         | Tipo    |
+| ------------- | ------- |
+| id            | INTEGER |
+| nome          | TEXT    |
+| email         | TEXT    |
+| cpf           | TEXT    |
+| data_cadastro | TEXT    |
+
+---
+
+## Tabela Candidatos
+
+| Campo         | Tipo    |
+| ------------- | ------- |
+| id            | INTEGER |
+| nome          | TEXT    |
+| email         | TEXT    |
+| telefone      | TEXT    |
+| area          | TEXT    |
+| data_cadastro | TEXT    |
+
+---
+
+# 📂 Estrutura do Projeto
 
 ```text
 Pixel Geek
@@ -87,14 +218,14 @@ Pixel Geek
 
 ---
 
-## ▶️ Como Executar
+# ▶️ Como Executar
 
-### Backend
+## Backend
 
 Instalar dependências:
 
 ```bash
-pip install -r requirements.txt
+pip install flask flask-cors
 ```
 
 Executar servidor:
@@ -111,7 +242,7 @@ http://127.0.0.1:5000
 
 ---
 
-### Frontend
+## Frontend
 
 Instalar dependências:
 
@@ -133,36 +264,38 @@ http://localhost:5173
 
 ---
 
-## 🗄️ Banco de Dados
+# 📈 Melhorias Implementadas
 
-O projeto utiliza SQLite para armazenar:
+Durante o desenvolvimento foram implementadas melhorias relacionadas a:
 
-### Clientes
-
-- Nome
-- E-mail
-- CPF
-- Data de cadastro
-
-### Candidatos
-
-- Nome
-- E-mail
-- Telefone
-- Área de interesse
-- Data de cadastro
+* Interface visual
+* Experiência do usuário
+* Organização dos componentes React
+* Organização das rotas
+* Responsividade
+* Integração Front-End e Back-End
+* Persistência de dados
+* Segurança visual dos dados
+* Funcionalidades adicionais próprias
 
 ---
 
-## 👥 Integrantes
+# 👥 Integrantes
 
-- Denisson Victor
-- João Pedro
-- Iderval Neto
-- Reginaldo Neto
+* Denisson Victor
+* João Pedro
+* Iderval Neto
+* Reginaldo Neto
 
 ---
 
-## 📚 Projeto Acadêmico
+# 📚 Projeto Acadêmico
 
-Projeto desenvolvido para a disciplina de Desenvolvimento Web, utilizando React, Flask e SQLite para demonstrar conceitos de frontend, backend e integração com banco de dados.
+Projeto desenvolvido para o curso Jovem Tech com o objetivo de aplicar conceitos de Front-End, Back-End e Banco de Dados através da construção de uma aplicação Full Stack moderna.
+
+A Pixel Geek demonstra a integração entre React, Flask e SQLite, utilizando boas práticas de desenvolvimento, organização de código, persistência de dados e experiência do usuário.
+
+# ❌ Erros Percebidos
+
+Ao efetuar o cadastrado com email repetido, o sistema travou para novos cadastros.
+A Área Secreta não está funcionando no modo claro. 
